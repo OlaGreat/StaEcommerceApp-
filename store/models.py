@@ -54,6 +54,9 @@ class Order(models.Model):
     status = models.BooleanField(default = False)
     date = models.DateTimeField(default = datetime.today)
 
+    def __str__(self):
+        return self.orderNumber
+
     
 
 
@@ -64,6 +67,6 @@ class vendor(models.Model):
     product_type = models.CharField(max_length = 100)
 
     def __str__(self):
-        return f"{self.vendor_full_name}"
+        return self.vendor_full_name
 
 
