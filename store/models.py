@@ -35,7 +35,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='upload/product/')
     description = models.TextField()
     price = models.DecimalField(default=0, max_digits=7, decimal_places=2)
-    discount_price = models.DecimalField(null=True, max_digits=5,decimal_places=2 )
+    discount_price = models.DecimalField(default=0, max_digits=7, decimal_places=2, blank=True)
 
     def __str__(self):
         return self.name
