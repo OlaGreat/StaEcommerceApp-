@@ -11,12 +11,17 @@ def home(request):
     return render(request, 'home.html',{'products' : products})
 
 
+
 def about(request):
     return render(request, 'about.html',{})
+
+
 
 def logout_user(request):
     logout(request)
     return redirect('homePage')
+
+
 
 def login_user(request):
     if request.method == "POST":
@@ -28,14 +33,13 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, (f'Welcome back {username}'))
+            return redirect('homePage')
         else:
             messages.success(request, ('invalid user details'))
             return redirect('login')
     else:
         return render(request, 'login.html', {})
+    
 
-
-            
-
-    # return redirect('home')
-    return render(request, 'login.html')
+def register(request):
+    return render(request, 'register.html', {})
