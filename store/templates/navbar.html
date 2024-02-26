@@ -8,9 +8,9 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'homePage' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'homePage' %}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'homePage' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 {% endif %}
                                                 
                 <li class="nav-item dropdown">

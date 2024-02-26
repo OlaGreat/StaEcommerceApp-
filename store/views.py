@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Product
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,7 +16,26 @@ def about(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('home')
+    return redirect('homePage')
 
 def login_user(request):
-    return redirect('home')
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username= username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, (f'Welcome back {username}'))
+        else:
+            messages.success(request, ('invalid user details'))
+            return redirect('login')
+    else:
+        return render(request, 'login.html', {})
+
+
+            
+
+    # return redirect('home')
+    return render(request, 'login.html')
