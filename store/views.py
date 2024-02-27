@@ -42,4 +42,5 @@ def login_user(request):
     
 
 def register(request):
+    
     return render(request, 'register.html', {})
