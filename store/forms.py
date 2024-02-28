@@ -11,7 +11,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('userName', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'firstName', 'lastName', 'email', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -19,14 +19,14 @@ class SignUpForm(UserCreationForm):
 
         self.fields['username'].label =""
         self.fields['username'].widget.attrs['class']= 'form-control'
-        self.fields['username'].widget.attr['placeholder']='username'
+        self.fields['username'].widget.attrs['placeholder']='username'
         self.fields['username'].help_text= '<span class = "form-text text-muted"><small>Required. 150 characters or fewer. Letters, digit and @/./+/-/_only000.</small></span>'
 
 
         self.fields['password1'].label=""
         self.fields['password1'].widget.attrs['class']="form-control"
-        self.fields['password1'].widget.attrs['placeholder']="password1"
-        self.fields['password1'].help_text= '<ul class = "form-text text-muted small"><li>Your Password can\'t be similar to your other personal information. </li><li>Your Password must contain at least 8 characters.</li><li><li>Your Password can\'t be commonly used password.</li><li>Your password can\'t be entirely numeric </li></ul>'
+        self.fields['password1'].widget.attrs['placeholder']="password"
+        self.fields['password1'].help_text= '<ul class = "form-text text-muted small"><li>Your Password can\'t be similar to your other personal information. </li><li>Your Password must contain at least 8 characters.</li><li>Your Password can\'t be commonly used password.</li><li>Your password can\'t be entirely numeric </li></ul>'
 
         self.fields['password2'].label=""
         self.fields['password2'].widget.attrs['class'] = 'form-control'

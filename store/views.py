@@ -3,6 +3,7 @@ from .models import Product
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
+from .forms import SignUpForm
 # Create your views here.
 
 
@@ -42,5 +43,25 @@ def login_user(request):
     
 
 def register(request):
-    
-    return render(request, 'register.html', {})
+    form = SignUpForm
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.success(request, (f"Thank you for registering {username}"))
+                return redirect('homePage')
+            else:
+                messages.success(request, ("an error ocurred"))
+                return redirect('homePage')
+        else:
+            error_messages = [message for messages in form.errors.values() for message in messages]
+            return render(request, 'register.html', {'form': form, 'error_messages': error_messages})
+    else:
+        return render(request, 'register.html', {'form': form})
