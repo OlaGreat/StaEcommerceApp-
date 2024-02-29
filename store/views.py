@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
@@ -7,9 +7,34 @@ from .forms import SignUpForm
 # Create your views here.
 
 
+
+
+def viewProduct(request, productPk):
+    pass
+
+
+def category(request, queryCategory):
+
+    query = queryCategory.replace('-','')
+    try:
+        category = Category.objects.get(name=query)
+    except:
+        messages.success(request, ("there are no product for this category"))
+    
+    products = Product.objects.filter(Category=category)
+
+    return render(request, 'category.html', {'products': products , 'category' : category })
+
+
+
+
 def home(request):
     products = Product.objects.all()
-    return render(request, 'home.html',{'products' : products})
+    try:
+        categories = Category.objects.all()
+    except:
+        messages.success(request, ("There are no categories listed"))
+    return render(request, 'home.html',{'products' : products, 'categories':categories})
 
 
 
