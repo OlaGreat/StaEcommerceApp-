@@ -7,10 +7,16 @@ from .forms import SignUpForm
 # Create your views here.
 
 
+def cart(request):
+
+    return render(request, 'cart.html', {})
+
 
 
 def viewProduct(request, productPk):
-    pass
+    product = Product.objects.get(id=productPk)
+
+    return render(request, 'product.html', {'product': product })
 
 
 def category(request, queryCategory):
