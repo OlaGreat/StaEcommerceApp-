@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 def summary(request):
-    pass
+    return render(request, 'cart_summary.html', {})
 
 def add(request, pk):
     pass

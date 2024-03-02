@@ -7,10 +7,6 @@ from .forms import SignUpForm
 # Create your views here.
 
 
-def cart(request):
-
-    return render(request, 'cart.html', {})
-
 
 
 def viewProduct(request, productPk):
