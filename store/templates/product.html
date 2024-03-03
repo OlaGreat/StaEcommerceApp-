@@ -22,6 +22,7 @@
                         <p class="card-text">{{product.description}}</p>
                         <br><br>
                         <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
+                        <button class="btn btn-secondary" value="{{ product.id }}" id="addToCart">Add to cart</button>
 
                     </center>
                    
@@ -37,6 +38,24 @@
 
 
 <br><br><br><br><br><br><br><br>
+
+
+<script>
+    $(document).on('click', '#addToCart', function(e){
+        e.preventDefault()
+        $.ajax({
+            type: 'POST',
+            url: '{% url "addToCart" %}',
+            data: {
+                product_id : $('#addToCart').val(),
+                csrfmiddlewaretoken : '{{ csrf_token }}',
+                action : 'post'
+
+            },
+        })
+
+    });
+</script>
 
 
 
