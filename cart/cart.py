@@ -10,4 +10,15 @@ class Cart():
 
         self.cart = cart
 
+    def add(self, product):
+        print(product)
+        product_id = product.id
+
+        if product_id in self.cart:
+            pass
+        else:
+            self.cart[product_id] = {'price': str(product.price)}
+
+        self.session.modified = True 
+
         

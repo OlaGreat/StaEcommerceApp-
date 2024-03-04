@@ -22,7 +22,9 @@
                         <p class="card-text">{{product.description}}</p>
                         <br><br>
                         <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
-                        <button class="btn btn-secondary" value="{{ product.id }}" id="addToCart">Add to cart</button>
+                        <button class="btn btn-secondary" value="{{ product.id }}" id="addCart">Add to cart</button>
+                        
+
 
                     </center>
                    
@@ -50,8 +52,13 @@
                 product_id : $('#addToCart').val(),
                 csrfmiddlewaretoken : '{{ csrf_token }}',
                 action : 'post'
-
             },
+            success: function(json){
+                console.log(json)
+            },
+            error: function(xhr, errorMessage, error){
+
+            }
         })
 
     });
