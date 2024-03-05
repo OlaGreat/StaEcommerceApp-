@@ -43,18 +43,19 @@
 
 
 <script>
-    $(document).on('click', '#addToCart', function(e){
+    $(document).on('click', '#addCart', function(e){
         e.preventDefault()
         $.ajax({
             type: 'POST',
             url: '{% url "addToCart" %}',
             data: {
-                product_id : $('#addToCart').val(),
+                product_id : $('#addCart').val(),
                 csrfmiddlewaretoken : '{{ csrf_token }}',
                 action : 'post'
             },
             success: function(json){
-                console.log(json)
+                document.getElementById('cart_quantity')
+                .textContent = json.cart_size
             },
             error: function(xhr, errorMessage, error){
 
