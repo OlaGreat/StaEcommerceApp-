@@ -53,6 +53,7 @@
                 csrfmiddlewaretoken : '{{ csrf_token }}',
                 action : 'post'
             },
+            
             success: function(json){
                 document.getElementById('cart_quantity')
                 .textContent = json.cart_size

@@ -3,6 +3,12 @@
 
 {% block content %}
 
+
+{% if cart_product %}
+
+{%  for product in cart_products %}
+
+
 <div class="container">
     <br>
     <div class="card mb-3" >
@@ -28,6 +34,8 @@
     </div> 
 
 </div>
+
+{% endfor %}
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

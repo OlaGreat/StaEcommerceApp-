@@ -7,7 +7,10 @@ from .cart import Cart
 
 
 def summary(request):
-    return render(request, 'cart_summary.html', {})
+    cart = Cart(request)
+    products = cart.get_products()
+
+    return render(request, 'cart_summary.html', {'cart_products' : products})
 
 def add(request):
     cart = Cart(request)
@@ -29,8 +32,18 @@ def add(request):
 
 
 
-def delete(request, pk):
-    pass
+def delete(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = request.POST.get('product_id')
+
+        cart.delete(product_id)
+
+        cart_quantity = cart.__len__()
+
+        response = JsonResponse({'cart_size': cart_quantity})
+
+        return response
 
 def update(request, pk):
     pass
