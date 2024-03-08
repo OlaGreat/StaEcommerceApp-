@@ -4,40 +4,60 @@
 {% block content %}
 
 
-{% if cart_product %}
+{% if cart_products %}
 
-{%  for product in cart_products %}
+    {%  for product in cart_products %}
 
 
-<div class="container">
-    <br>
-    <div class="card mb-3" >
-        <div class="row g-0">
-    
+        <div class="container">
+            <br>
+            <div class="card mb-3" >
+                <div class="row g-0">
             
-          <div class="col-md-4">
-                <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-                <div class="card-body">
-                    <center>
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{product.description}}</p>
-                        <br><br>
-                        <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
-
-                    </center>
-                   
+                    
+                <div class="col-md-4">
+                        <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
                 </div>
-          </div>
+                <div class="col-md-8">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{product.description}}</p>
+                                ${{product.price}}
+                                <br><br>
+
+                                <div class="row justify-content-center">
+                                    Quantity
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+
+                                </div>
+
+                                
+
+                                <br>
+                                <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
+
+                            </center>
+                        
+                        </div>
+                </div>
+                </div>
+            </div> 
+
         </div>
-    </div> 
 
-</div>
+    {% endfor %}
 
-{% endfor %}
+{% else %}
+    <div>
+        Cart is empty.....
+    </div>
 
-
+{% endif %}
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 

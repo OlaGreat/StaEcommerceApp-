@@ -20,6 +20,7 @@
                     <center>
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{product.description}}</p>
+                        ${{product.price}}
                         <br><br>
                         <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
                         <button class="btn btn-secondary" value="{{ product.id }}" id="addCart">Add to cart</button>
