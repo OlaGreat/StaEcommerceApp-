@@ -15,36 +15,48 @@
                 <div class="row g-0">
             
                     
-                <div class="col-md-4">
-                        <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
+                    <div class="col-md-4">
+                            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
                         <div class="card-body">
                             <center>
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{product.description}}</p>
                                 ${{product.price}}
-                                <br><br>
-
+                                <br><br>                               
                                 <div class="row justify-content-center">
-                                    Quantity
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                    <div class="col-md-2">Quantity:</div>
+                                    <div class="col-md-2">
 
+                                        <select class="form-select form-select-sm" id="quantity">
+                                            {% for key, values in quantity.items %}
+
+                                                {% if key == product.id|slugify %}
+                                                    <option value="{{values}}">{{values}}</option>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+
+                                        </select>
+                                    </div>
+                                   
                                 </div>
-
-                                
-
                                 <br>
                                 <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
 
                             </center>
                         
                         </div>
-                </div>
+                    </div>
                 </div>
             </div> 
 

@@ -12,17 +12,18 @@ class Cart():
 
         self.cart = cart
 
-    def add(self, product):
+    def add(self, product, product_quantities):
         
         product_id = str(product.id)
+        product_quantity =product_quantities
 
         if product_id in self.cart:
             pass
         
         else:
             print(self.cart)
-            self.cart[product_id] = {'price': str(product.price)}
-
+            self.cart[product_id] =  product_quantity
+            
         self.session.modified = True 
 
 
@@ -45,6 +46,9 @@ class Cart():
         products = Product.objects.filter(id__in=product_ids)
 
         return products
+    
+    def get_quantity(self):
+        return self.cart
 
 
         
