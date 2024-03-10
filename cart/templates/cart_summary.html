@@ -29,11 +29,12 @@
                                     <div class="col-md-2">Quantity:</div>
                                     <div class="col-md-2">
 
-                                        <select class="form-select form-select-sm" id="quantity">
+                                        <select class="form-select form-select-sm" id="select{{product.id}}">
                                             {% for key, values in quantity.items %}
 
                                                 {% if key == product.id|slugify %}
-                                                    <option value="{{values}}">{{values}}</option>
+                                                    
+                                                    <option selected>{{values}}</option>
 
                                                 {% endif %}
 
@@ -52,6 +53,10 @@
                                 </div>
                                 <br>
                                 <a href="{% url 'homePage'  %}" class="btn btn-secondary">Home</a>
+
+                                <button type="button" data-index="{{product.id}}" class="btn btn-secondary  updateButton" >Update</button>
+
+                                <button type="button" data-index="{{product_id}}" class="btn btn-danger remove">Remove</button>
 
                             </center>
                         
@@ -73,4 +78,64 @@
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
+<script>
+    $(document).on('click', '.updateButton', function(e){
+    e.preventDefault()
+    var productId = $(this).data('index');
+    $.ajax({
+        type: 'POST',
+        url: '{% url "update" %}',
+        data: {
+            product_id: $(this).data('index'),
+            product_quantity:$('#select' + productId + ' option:selected').text(),
+            csrfmiddlewaretoken : '{{ csrf_token }}',
+            action : 'post'
+            
+        },
+
+        
+        success: function(json){
+            
+            location.reload();           
+        },
+        error: function(xhr, errorMessage, error){
+
+        }
+
+
+    })
+
+
+
+});
+</script>
+
+<script>
+    $(document).on('click', '.remove', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url:  '{% url "delete" %}',
+
+            data: {
+                product_id: $(this).data('index'),
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                action: 'post'
+            },
+
+            success: function(Json){
+                location.reload()
+            },
+
+            error: function(xhr, errorMessage,error){
+                console.log(error)
+
+            }
+        })
+    })
+</script>
+
+
 {% endblock %}
+
+

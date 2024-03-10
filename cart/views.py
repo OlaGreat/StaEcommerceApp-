@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from store.models import Product
-from django.http import JsonResponse
+from django.http import JsonResponse 
 from .cart import Cart
 
 # Create your views here.
@@ -44,11 +44,25 @@ def delete(request):
 
         cart_quantity = cart.__len__()
 
-        response = JsonResponse({'cart_size': cart_quantity})
+    response = JsonResponse({'cart_size': cart_quantity})
 
-        return response
+    return response
 
-def update(request, pk):
-    pass
+def update(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        product_qty = request.POST.get('product_quantity')
+
+    
+
+        cart.update(product_id, product_qty)
+
+    
+
+
+    response = JsonResponse({'product_qty' : product_id})
+
+    return response
 
  
