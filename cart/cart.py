@@ -35,9 +35,9 @@ class Cart():
 
         id = str(product_id)
 
-        self.cart.pop(id)
-
-        self.session.modified = True 
+        if id  in self.cart:
+            self.cart.pop(id)
+            self.session.modified = True 
         
 
     def get_products(self):
@@ -61,3 +61,19 @@ class Cart():
         self.session.modified = True
 
         return self.cart
+    
+    def cart_total(self):
+        total = 0
+        product_ids = self.cart.keys()
+        print(product_ids)
+        cart = self.cart
+    
+
+
+        products = Product.objects.filter(id__in=product_ids)
+
+        for key, value in cart.items():
+            for product in products:
+                if product.id == int(key):
+                    total= total+(product.price * value)
+        return total
