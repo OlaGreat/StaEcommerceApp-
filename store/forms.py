@@ -1,7 +1,26 @@
-from typing import Any
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+
+class UpdateUserProfile(UserChangeForm):
+    firstName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First Name'}))
+    lastName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'last Name', }))
+    email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
+    password = None
+
+    class Meta:
+        model = User
+        fields = ('username', 'firstName', 'lastName', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserProfile, self).__init__(*args, **kwargs)
+
+
+        self.fields['username'].label =""
+        self.fields['username'].widget.attrs['class']= 'form-control'
+        self.fields['username'].widget.attrs['placeholder']='username'
+        self.fields['username'].help_text= '<span class = "form-text text-muted"><small>Required. 150 characters or fewer. Letters, digit and @/./+/-/_only000.</small></span>'
+
 
 class SignUpForm(UserCreationForm):
     firstName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First Name'}))

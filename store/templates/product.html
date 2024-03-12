@@ -76,6 +76,8 @@
             success: function(json){
                 document.getElementById('cart_quantity')
                 .textContent = json.cart_size
+
+                location.reload()
             },
             error: function(xhr, errorMessage, error){
 

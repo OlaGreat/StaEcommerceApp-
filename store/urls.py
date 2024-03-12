@@ -9,4 +9,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('category/<str:queryCategory>', views.category, name='category'),
     path('product/<int:productPk>', views.viewProduct, name='viewProduct'),
+    path('categories/', views.categories, name='categories'),
+    path('user_profile/', views.update_user_profile, name='update_profile'),
 ]

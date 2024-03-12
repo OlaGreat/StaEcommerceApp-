@@ -2,11 +2,37 @@ from django.shortcuts import render, redirect
 from .models import Product, Category
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth.models import User
 
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateUserProfile
 # Create your views here.
 
+def update_user_profile(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
 
+        update_form = UpdateUserProfile(request.POST or None, instance=current_user)
+
+        if update_form.is_valid():
+            t = update_form.save()
+            print(t)
+
+            login(request, current_user)
+            messages.success(request, ('profile updated successfully'))
+            return redirect('homePage')
+        
+        return render(request, 'user_profile.html', {'update_form': update_form})
+    else:
+        messages.success(request, ('To update profile you need to login'))
+        return redirect('login')
+
+   
+
+
+def categories(request):
+    categories = Category.objects.all()
+
+    return render(request, 'categoriesPage.html', {'categories': categories})
 
 
 def viewProduct(request, productPk):

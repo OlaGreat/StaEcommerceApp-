@@ -32,13 +32,11 @@ def add(request):
 
         product = Product.objects.get(pk=product_id)
 
-        messages.success(request, (f' added {product.name} to cart'))
+        messages.success(request, (f'you added {product.name} to cart'))
 
+        response = JsonResponse({ 'cart_size': cart_quantity })
 
-
-    response = JsonResponse({ 'cart_size': cart_quantity })
-
-    return response
+        return response
 
 
 
@@ -47,15 +45,16 @@ def delete(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
         product_id = request.POST.get('product_id')
-        
+
+        product = Product.objects.get(id=product_id)
         cart.delete(product_id)
 
         cart_quantity = cart.__len__()
 
 
-    response = JsonResponse({'cart_size': cart_quantity})
-
-    return response
+        response = JsonResponse({'cart_size': cart_quantity})
+        messages.success(request, (f'you removed {product.name} from your cart'))
+        return response
 
 def update(request):
     cart = Cart(request)
@@ -67,11 +66,10 @@ def update(request):
 
         cart.update(product_id, product_qty)
 
-    
+        response = JsonResponse({'product_qty' : product_id})
+        messages.success(request, (f'your cart has been updated'))
 
 
-    response = JsonResponse({'product_qty' : product_id})
-
-    return response
+        return response
 
  
