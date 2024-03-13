@@ -4,18 +4,37 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import SignUpForm, UpdateUserProfile
+from .forms import SignUpForm, UpdateUserProfile, ChangePassword
 # Create your views here.
+
+def update_password(request):
+    current_user = User.objects.get(id=request.user.id)
+    print(current_user)
+
+    # if current_user.is_authenticated:
+    #     form = ChangePassword(request.POST, current_user)
+    #     print(form)
+
+        # if form.is_valid():
+        #     form.save()
+        #     login(request, current_user)
+        #     messages.success(request, ("You have successfully changed your password"))
+    return render(request, 'update_password.html', {})       
+    # else:
+    #     messages.success(request, ("For you to change your password you have to be logged in"))
+    #     return redirect('login')
+    
+
 
 def update_user_profile(request):
     if request.user.is_authenticated:
-        current_user = User.objects.get(id=request.user.id)
+        current_user = request.user
 
         update_form = UpdateUserProfile(request.POST or None, instance=current_user)
 
         if update_form.is_valid():
-            t = update_form.save()
-            print(t)
+            update_form.save()
+            
 
             login(request, current_user)
             messages.success(request, ('profile updated successfully'))
