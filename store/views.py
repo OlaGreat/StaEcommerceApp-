@@ -8,25 +8,29 @@ from .forms import SignUpForm, UpdateUserProfile, ChangePassword
 # Create your views here.
 
 def update_password(request):
-    current_user = User.objects.get(id=request.user.id)
-    print(current_user)
+    if request.user.is_authenticated:
+        current_user = request.user
+        if request.method == 'POST':
+            form = ChangePassword(current_user, request.POST)
 
-    # if current_user.is_authenticated:
-    #     form = ChangePassword(request.POST, current_user)
-    #     print(form)
-
-        # if form.is_valid():
-        #     form.save()
-        #     login(request, current_user)
-        #     messages.success(request, ("You have successfully changed your password"))
-    return render(request, 'update_password.html', {})       
-    # else:
-    #     messages.success(request, ("For you to change your password you have to be logged in"))
-    #     return redirect('login')
+            if form.is_valid():
+                form.save()
+                login(request, current_user)
+                messages.success(request, ("You have successfully changed your password"))
+                return redirect('homePage')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+        form = ChangePassword(current_user) 
+        return render(request, 'update_password.html', {'form': form})       
+    else:
+        messages.success(request, ("For you to change your password you have to be logged in"))
+        return redirect('login')
     
 
 
 def update_user_profile(request):
+
     if request.user.is_authenticated:
         current_user = request.user
 
@@ -34,7 +38,6 @@ def update_user_profile(request):
 
         if update_form.is_valid():
             update_form.save()
-            
 
             login(request, current_user)
             messages.success(request, ('profile updated successfully'))
@@ -133,7 +136,8 @@ def register(request):
                 messages.success(request, ("an error ocurred"))
                 return redirect('homePage')
         else:
-            error_messages = [message for messages in form.errors.values() for message in messages]
-            return render(request, 'register.html', {'form': form, 'error_messages': error_messages})
+            for error in list(form.errors.values()):
+                messages.error(request, error) 
+            return render(request, 'register.html', {'form': form})
     else:
         return render(request, 'register.html', {'form': form})

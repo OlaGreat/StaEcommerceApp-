@@ -10,15 +10,21 @@ class ChangePassword(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super(ChangePassword, self).__init__(*args, **kwargs)
 
+        self.fields['old_password'].label=""
+        self.fields['old_password'].widget.attrs['class'] = 'form-control'
+        self.fields['old_password'].widget.attrs['placeholder'] = 'current password'
+        self.fields['old_password'].help_text= '<span class ="form-text text muted"><small>Please enter your current password</small></span>'
+
+
         self.fields['new_password1'].label=""
         self.fields['new_password1'].widget.attrs['class']="form-control"
-        self.fields['new_password1'].widget.attrs['placeholder']="password"
+        self.fields['new_password1'].widget.attrs['placeholder']="new password"
         self.fields['new_password1'].help_text= '<ul class = "form-text text-muted small"><li>Your Password can\'t be similar to your other personal information. </li><li>Your Password must contain at least 8 characters.</li><li>Your Password can\'t be commonly used password.</li><li>Your password can\'t be entirely numeric </li></ul>'
 
         self.fields['new_password2'].label=""
         self.fields['new_password2'].widget.attrs['class'] = 'form-control'
-        self.fields['new_password2'].widget.attrs['placeholder'] = 'confirm password'
-        self.fields['new_password2'].help_text= '<span class ="form-text text muted"><small>Please confirm your password</small></span>'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'confirm new password'
+        self.fields['new_password2'].help_text= '<span class ="form-text text muted"><small>Please confirm your new password</small></span>'
 
 
 class UpdateUserProfile(UserChangeForm):

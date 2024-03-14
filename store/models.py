@@ -1,5 +1,33 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address1 = models.CharField(max_length=200)
+    address2 = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=15)
+    city = models.CharField(max_length=20)
+    state = models.CharField(max_length=15)
+    country = models.CharField(max_length=20)
+    postal_code = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.user.username
+    
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+
+post_save.connect(create_profile, sender=User)
+    
+
+
+
+
+
 
 # Create your models here.
 class Customer(models.Model):
