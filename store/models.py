@@ -5,13 +5,13 @@ from django.db.models.signals import post_save
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200)
+    address1 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, blank=True)
     phone_number = models.CharField(max_length=15)
-    city = models.CharField(max_length=20)
-    state = models.CharField(max_length=15)
-    country = models.CharField(max_length=20)
-    postal_code = models.CharField(max_length=5)
+    city = models.CharField(max_length=20, blank=True)
+    state = models.CharField(max_length=15, blank=True)
+    country = models.CharField(max_length=20, blank=True)
+    postal_code = models.CharField(max_length=5, blank=True)
 
     def __str__(self):
         return self.user.username
